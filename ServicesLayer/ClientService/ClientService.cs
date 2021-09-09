@@ -36,7 +36,7 @@ namespace ServicesLayer.ClientService
                 Guid g = Guid.NewGuid();
                 newClient.clientKey = g.ToString();
                 
-                _context.clients.Add(newClient);
+                _context.clients.AddAsync(newClient);
             }
 
             await _context.SaveChangesAsync();

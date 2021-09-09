@@ -52,7 +52,10 @@ namespace DomainLayer.Models
         public DateTime EndDate { get; set; }
 
         [Column(TypeName = "Bit")]
-        public bool IsActive { get; set; } = false;
+        public bool ForSale { get; set; } = true;
+
+        [Column(TypeName = "Bit")]
+        public bool IsActive { get; set; } = true;
 
 
     }

@@ -17,6 +17,10 @@ namespace ServiceLayer.Mappers
             CreateMap<CarDTO, Car>();
             CreateMap<Client, ClientDTO>();
             CreateMap<ClientDTO, Client>();
+            CreateMap<WholeDTO, Client>();
+            CreateMap<WholeDTO, Car>();
+            CreateMap<Car, WholeDTO>();
+            CreateMap<Client, Car>();
         }
     }
 }
