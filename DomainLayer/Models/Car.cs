@@ -12,8 +12,8 @@ namespace DomainLayer.Models
     public class Car
     {
         [Key]
-        [Column(TypeName = "Int")]
-        public int carKey { get; set; }
+        [Column(TypeName = "nvarchar(50)")]
+        public String carKey { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(50)")]

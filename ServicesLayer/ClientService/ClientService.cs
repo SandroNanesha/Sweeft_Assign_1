@@ -1,4 +1,5 @@
-﻿using DomainLayer.DTOs;
+﻿using AutoMapper;
+using DomainLayer.DTOs;
 using DomainLayer.Models;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -13,70 +14,70 @@ using System.Threading.Tasks;
 
 namespace ServicesLayer.ClientService
 {
-    class ClientService : IClientService
+    public class ClientService : IClientService
     {
         private readonly ApplicationDbContext _context;
-        private readonly ClientValidator _fluentValidator;
         private readonly ClientDBValidator _dbValidator;
+        private readonly IMapper _mapper;
 
-        public ClientService(ApplicationDbContext context)
+        public ClientService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
-            _fluentValidator = new ClientValidator();
             _dbValidator = new ClientDBValidator(_context);
+            _mapper = mapper;
         }
-        public async Task<Client> AddClient(Client newClient)
+        public async Task AddClient(ClientDTO newClientDTO)
         {
-            var fluentValid = _fluentValidator.Validate(newClient);
-
-            if(fluentValid.IsValid && !_dbValidator.IsActive(newClient))
+            
+            if (!_dbValidator.IsActive(newClientDTO))
             {
-                newClient.clientKey = NewClientKey();
+                Client newClient = _mapper.Map<Client>(newClientDTO);
+                
+                Guid g = Guid.NewGuid();
+                newClient.clientKey = g.ToString();
+                
                 _context.clients.Add(newClient);
             }
 
             await _context.SaveChangesAsync();
-            return newClient;
-
         }
 
-        public async Task DeleteClient(Client currClient)
+        public async Task DeleteClient(String clientID)
         {
-            var fluentValid =  _fluentValidator.Validate(currClient, options => options.IncludeRuleSets("idChecker"));
+            ClientDTO currClientDTO = new ClientDTO();
+            currClientDTO.ID = clientID;
 
-            if (fluentValid.IsValid && _dbValidator.IsActive(currClient))
+            if (_dbValidator.IsActive(currClientDTO))
             {
+                Client currClient = _mapper.Map<Client>(currClientDTO);
+                
                 currClient.IsActive = false;
-            }
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<Client> GetSingle(Client currClient)
-        {
-            var fluentValid = _fluentValidator.Validate(currClient, options => options.IncludeRuleSets("idChecker"));
-
-            if (fluentValid.IsValid && _dbValidator.IsActive(currClient))
-            {
-                //BLA
-            }
-            return await _context.clients.Where(clt => clt.ID == currClient.ID).Where(clt => clt.IsActive).FirstOrDefaultAsync();
-        }
-        public async Task UpdateClientInfo(Client currClient)
-        {
-            var fluentValid = _fluentValidator.Validate(currClient, options => options.IncludeRuleSets("idChecker"));
-
-            if (fluentValid.IsValid && _dbValidator.IsActive(currClient))
-            {
                 _context.clients.Update(currClient);
             }
 
             await _context.SaveChangesAsync();
         }
 
-        private static int NewClientKey()
-        {
+        public async Task<ClientDTO> GetSingle(String clientID)
+        { 
             
-            return 0;
+            Client foundClient = await _context.clients.Where(clt => clt.ID == clientID && clt.IsActive).FirstOrDefaultAsync();
+
+            return _mapper.Map<ClientDTO>(foundClient);
+        }
+
+
+        public async Task UpdateClientInfo(ClientDTO currClientDTO)
+        {
+            if (_dbValidator.IsActive(currClientDTO))
+            {
+                Client currClient = _mapper.Map<Client>(currClientDTO);
+                
+                _context.clients.Update(currClient);
+                
+            }
+
+            await _context.SaveChangesAsync();
         }
             
     }

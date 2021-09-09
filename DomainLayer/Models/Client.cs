@@ -12,8 +12,8 @@ namespace DomainLayer.Models
     public class Client
     {
         [Key]
-        [Column(TypeName = "Int")]
-        public int clientKey { get; set; } = 0;
+        [Column(TypeName = "nvarchar(50)")]
+        public String clientKey { get; set; } = "";
 
         [Required]
         [Column(TypeName = "nvarchar(50)")]

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DomainLayer.Mappers
+namespace ServiceLayer.Mappers
 {
     public class MappingProfile : Profile
     {

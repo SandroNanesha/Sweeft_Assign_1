@@ -10,13 +10,13 @@ namespace ServicesLayer.ClientService
 {
     public interface IClientService
     {
-        Task<Client> AddClient(Client newClient);
+        Task AddClient(ClientDTO newClient);
 
-        Task UpdateClientInfo(Client currClient);
+        Task UpdateClientInfo(ClientDTO currClient);
 
-        Task DeleteClient(Client currClient);
+        Task DeleteClient(String clientID);
 
-        Task<Client> GetSingle(Client currClient);
+        Task<ClientDTO> GetSingle(String clientID);
 
 
     }

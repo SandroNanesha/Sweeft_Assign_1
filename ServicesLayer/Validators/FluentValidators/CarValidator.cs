@@ -1,4 +1,5 @@
-﻿using DomainLayer.Models;
+﻿using DomainLayer.DTOs;
+using DomainLayer.Models;
 using FluentValidation;
 using RepositoryLayer;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace ServicesLayer.Validators.FluentValidators
 {
 
-    public class CarValidator : AbstractValidator<Car>
+    public class CarValidator : AbstractValidator<CarDTO>
     {
 
         public CarValidator()

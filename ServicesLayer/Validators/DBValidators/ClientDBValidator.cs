@@ -1,4 +1,5 @@
-﻿using DomainLayer.Models;
+﻿using DomainLayer.DTOs;
+using DomainLayer.Models;
 using RepositoryLayer;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,9 @@ namespace ServicesLayer.Validators.DBValidators
         {
             _context = context;
         }
-        public bool IsActive (Client client)
+        public bool IsActive (ClientDTO client)
         {
-            return !_context.clients.Any(clt => clt.ID == client.ID && clt.IsActive == true);
+            return _context.clients.Any(clt => clt.ID == client.ID && clt.IsActive == true);
         }
 
     }

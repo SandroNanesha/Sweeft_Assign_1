@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RepositoryLayer.Migrations
 {
-    public partial class firstOne : Migration
+    public partial class firtsMIg : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,11 +11,11 @@ namespace RepositoryLayer.Migrations
                 name: "CarTable",
                 columns: table => new
                 {
-                    carKey = table.Column<int>(type: "Int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    carKey = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     ownerID = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SerialNum = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     ReleaseYear = table.Column<int>(type: "Int", nullable: false),
                     vinCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<double>(type: "Float", nullable: false),
@@ -32,8 +32,7 @@ namespace RepositoryLayer.Migrations
                 name: "ClientTable",
                 columns: table => new
                 {
-                    clientKey = table.Column<int>(type: "Int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    clientKey = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     ID = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),

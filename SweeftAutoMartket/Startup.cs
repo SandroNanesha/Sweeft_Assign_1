@@ -1,5 +1,5 @@
 using AutoMapper;
-using DomainLayer.Mappers;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using RepositoryLayer;
+using ServiceLayer.Mappers;
+using ServicesLayer.ClientService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +32,7 @@ namespace SweeftAutoMartket
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddScoped<IClientService, ClientService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -57,7 +59,9 @@ namespace SweeftAutoMartket
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DevConnection"));
             });
+
             
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

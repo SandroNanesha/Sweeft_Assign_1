@@ -1,4 +1,5 @@
-﻿using DomainLayer.Models;
+﻿using DomainLayer.DTOs;
+using DomainLayer.Models;
 using FluentValidation;
 using FluentValidation.Results;
 using RepositoryLayer;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ServicesLayer.Validators.FluentValidators
 {
-    public class ClientValidator : AbstractValidator<Client>
+    public class ClientValidator : AbstractValidator<ClientDTO>
     {
         public ClientValidator()
         {

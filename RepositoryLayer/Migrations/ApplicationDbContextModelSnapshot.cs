@@ -21,10 +21,8 @@ namespace RepositoryLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Models.Car", b =>
                 {
-                    b.Property<int>("carKey")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("Int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("carKey")
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Brand")
                         .IsRequired()
@@ -46,6 +44,10 @@ namespace RepositoryLayer.Migrations
                     b.Property<int>("ReleaseYear")
                         .HasColumnType("Int");
 
+                    b.Property<string>("SerialNum")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("Date");
 
@@ -64,10 +66,8 @@ namespace RepositoryLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Models.Client", b =>
                 {
-                    b.Property<int>("clientKey")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("Int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("clientKey")
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(50)");
