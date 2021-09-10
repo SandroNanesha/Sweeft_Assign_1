@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using RepositoryLayer;
+using Serilog;
 using ServiceLayer.Mappers;
 using ServicesLayer.ClientService;
 using System;
@@ -25,6 +26,8 @@ namespace SweeftAutoMartket
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
