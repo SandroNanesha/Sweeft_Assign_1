@@ -2,6 +2,7 @@
 using DomainLayer.DTOs;
 using DomainLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RepositoryLayer;
 using ServicesLayer.Validators.DBValidators;
 using System;
@@ -17,12 +18,14 @@ namespace ServicesLayer.CarService
         private readonly ApplicationDbContext _context;
         private readonly CarDBValidator _dbValidator;
         private readonly IMapper _mapper;
+        private readonly ILogger<CarService> _logger;
 
-        public CarService(ApplicationDbContext context, IMapper mapper)
+        public CarService(ApplicationDbContext context, IMapper mapper, ILogger<CarService> logger)
         {
             _context = context;
             _mapper = mapper;
             _dbValidator = new CarDBValidator(_context);
+            _logger = logger;
         }
         public async Task AddCar(CarDTO newCarDTO)
         {
@@ -34,6 +37,10 @@ namespace ServicesLayer.CarService
                 newCar.carKey = g.ToString();
 
                 _context.cars.AddAsync(newCar);
+            }
+            else
+            {
+                _logger.LogWarning("Car with vinCode {vinCode) is already in database", newCarDTO.vinCode);
             }
 
             await _context.SaveChangesAsync();
@@ -47,6 +54,10 @@ namespace ServicesLayer.CarService
 
                 currCar.IsActive = false;
                 _context.cars.Update(currCar);
+            }
+            else
+            {
+                _logger.LogWarning("Car with vinCode {vinCode) is not in database", currCarDTO.vinCode);
             }
 
             await _context.SaveChangesAsync();
@@ -70,6 +81,10 @@ namespace ServicesLayer.CarService
 
                 _context.cars.Update(currCar);
 
+            }
+            else
+            {
+                _logger.LogWarning("Car with vinCode {vinCode) is not in database", vinCode);
             }
 
             await _context.SaveChangesAsync();

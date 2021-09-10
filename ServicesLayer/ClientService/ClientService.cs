@@ -3,6 +3,7 @@ using DomainLayer.DTOs;
 using DomainLayer.Models;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RepositoryLayer;
 using ServicesLayer.Validators.DBValidators;
 using ServicesLayer.Validators.FluentValidators;
@@ -19,12 +20,14 @@ namespace ServicesLayer.ClientService
         private readonly ApplicationDbContext _context;
         private readonly ClientDBValidator _dbValidator;
         private readonly IMapper _mapper;
+        private readonly ILogger<ClientService> _logger;
 
-        public ClientService(ApplicationDbContext context, IMapper mapper)
+        public ClientService(ApplicationDbContext context, IMapper mapper, ILogger<ClientService> logger)
         {
             _context = context;
             _dbValidator = new ClientDBValidator(_context);
             _mapper = mapper;
+            _logger = logger;
         }
         public async Task AddClient(ClientDTO newClientDTO)
         {
@@ -37,6 +40,9 @@ namespace ServicesLayer.ClientService
                 newClient.clientKey = g.ToString();
                 
                 _context.clients.AddAsync(newClient);
+            } else
+            {
+                _logger.LogWarning("Client with id {id) is already in database", newClientDTO.ID);
             }
 
             await _context.SaveChangesAsync();
@@ -53,6 +59,9 @@ namespace ServicesLayer.ClientService
                 
                 currClient.IsActive = false;
                 _context.clients.Update(currClient);
+            } else
+            {
+                _logger.LogWarning("Client with id {id) is not active in database", currClientDTO.ID);
             }
 
             await _context.SaveChangesAsync();
@@ -75,6 +84,9 @@ namespace ServicesLayer.ClientService
                 
                 _context.clients.Update(currClient);
                 
+            } else
+            {
+                _logger.LogWarning("Client with id {id) is not in database", currClientDTO.ID);
             }
 
             await _context.SaveChangesAsync();
