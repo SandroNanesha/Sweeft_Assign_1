@@ -13,6 +13,7 @@ using Microsoft.OpenApi.Models;
 using RepositoryLayer;
 using Serilog;
 using ServiceLayer.Mappers;
+using ServicesLayer.CarService;
 using ServicesLayer.ClientService;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,9 @@ namespace SweeftAutoMartket
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<ICarService, CarService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

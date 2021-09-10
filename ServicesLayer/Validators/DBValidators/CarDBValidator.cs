@@ -23,6 +23,15 @@ namespace ServicesLayer.Validators.DBValidators
                 && _context.clients.Any(clt => clt.ID == car.ownerID && clt.IsActive == true);
         }
 
+        public Car getCar(CarDTO car)
+        {
+            if (_context.clients.Any(clt => clt.ID == car.ownerID && clt.IsActive == true))
+            {
+                return _context.cars.Where(cr => cr.vinCode == car.vinCode && cr.IsActive).FirstOrDefault();
+            }
+            return null;
+        }
+
         
 
     }

@@ -21,7 +21,7 @@ namespace RepositoryLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Models.Car", b =>
                 {
-                    b.Property<string>("carKey")
+                    b.Property<string>("vinCode")
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Brand")
@@ -58,18 +58,14 @@ namespace RepositoryLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("vinCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("carKey");
+                    b.HasKey("vinCode");
 
                     b.ToTable("CarTable");
                 });
 
             modelBuilder.Entity("DomainLayer.Models.Client", b =>
                 {
-                    b.Property<string>("clientKey")
+                    b.Property<string>("ID")
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Address")
@@ -77,10 +73,6 @@ namespace RepositoryLayer.Migrations
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("Date");
-
-                    b.Property<string>("ID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("Bit");
@@ -97,7 +89,7 @@ namespace RepositoryLayer.Migrations
                     b.Property<string>("mail")
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("clientKey");
+                    b.HasKey("ID");
 
                     b.ToTable("ClientTable");
                 });

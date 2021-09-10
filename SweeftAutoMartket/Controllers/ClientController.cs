@@ -42,7 +42,7 @@ namespace SweeftAutoMartket.Controllers
                 currClientDTO.ID = id;
                 var valid = _clientValidator.Validate(currClientDTO, options => options.IncludeRuleSets("idChecker"));
 
-                if (!String.IsNullOrEmpty(id) && valid.IsValid)
+                if (valid.IsValid)
                     return await _clientService.GetSingle(id);
 
                 _logger.LogWarning("Invalid input");
@@ -53,7 +53,7 @@ namespace SweeftAutoMartket.Controllers
             {
                 _logger.LogError(e, e.Message);
                 
-                throw e;
+                throw;
             }
         }
 
@@ -78,7 +78,7 @@ namespace SweeftAutoMartket.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
-                throw e;
+                throw;
             }
             
         }
@@ -92,7 +92,7 @@ namespace SweeftAutoMartket.Controllers
                 ClientDTO currClientDTO = new ClientDTO();
                 currClientDTO.ID = id;
                 var valid = _clientValidator.Validate(currClientDTO, options => options.IncludeRuleSets("idChecker"));
-                if (!String.IsNullOrEmpty(id) && valid.IsValid)
+                if (valid.IsValid)
                 {
                     await _clientService.DeleteClient(id);
                     return Ok();
@@ -106,7 +106,7 @@ namespace SweeftAutoMartket.Controllers
             {
 
                 _logger.LogError(e, e.Message);
-                throw e;
+                throw;
             }
         }
 
@@ -118,7 +118,7 @@ namespace SweeftAutoMartket.Controllers
             try
 
             {
-                var valid = _clientValidator.Validate(currClientDTO);
+                var valid = _clientValidator.Validate(currClientDTO, options => options.IncludeRuleSets("idChecker"));
                 if (valid.IsValid)
                 {
                     await _clientService.UpdateClientInfo(currClientDTO);
@@ -133,7 +133,7 @@ namespace SweeftAutoMartket.Controllers
             {
 
                 _logger.LogError(e, e.Message);
-                throw e;
+                throw;
             }
         }
 

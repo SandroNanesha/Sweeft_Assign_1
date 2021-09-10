@@ -12,8 +12,9 @@ namespace DomainLayer.Models
     public class Car
     {
         [Key]
+        [Required]
         [Column(TypeName = "nvarchar(50)")]
-        public String carKey { get; set; }
+        public String vinCode { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(50)")]
@@ -34,10 +35,6 @@ namespace DomainLayer.Models
         [Required]
         [Column(TypeName = "Int")]
         public int ReleaseYear { get; set; }
-
-        [Required]
-        [Column(TypeName = "nvarchar(max)")]
-        public String vinCode { get; set; }
 
         [Required]
         [Column(TypeName = "Float")]

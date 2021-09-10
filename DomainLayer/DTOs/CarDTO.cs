@@ -10,8 +10,6 @@ namespace DomainLayer.DTOs
 
     public class CarDTO
     {
-
-        
         public String ownerID { get; set; }
         
         public String Brand { get; set; }
@@ -30,6 +28,6 @@ namespace DomainLayer.DTOs
         
         public DateTime EndDate { get; set; }
 
-        public bool ForSale { get; set; }
+        public bool ForSale { get; set; } = true;
     }
 }

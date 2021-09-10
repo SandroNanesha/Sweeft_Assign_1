@@ -49,14 +49,14 @@ namespace SweeftAutoMartket.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
-                throw e;
+                throw;
             }
 
         }
 
 
         [HttpDelete("{id}/{vinCode}")]
-        public async Task<ActionResult> DeleteClient(String id, String vinCode)
+        public async Task<ActionResult> DeleteCar(String id, String vinCode)
         {
             _logger.LogInformation("In {controller} Delete Method invoked", this.GetType().Name);
             try
@@ -81,56 +81,67 @@ namespace SweeftAutoMartket.Controllers
             {
 
                 _logger.LogError(e, e.Message);
-                throw e;
+                throw;
             }
         }
 
-
-        [HttpGet]
-        [Route(nameof(GetCars))]
-        public async Task<IEnumerable<WholeDTO>> GetCars([FromBody] DateDTO fromTo)
+        [HttpGet("{from}/{to}")]
+        public async Task<ActionResult<IEnumerable<WholeDTO>>> GetCars(String from, String to)
         {
             _logger.LogInformation("In {controller} GetCars Method invoked", this.GetType().Name);
 
             try
             {
+                DateDTO fromTo = new DateDTO();
+                fromTo.StartDate = from;
+                fromTo.EndDate = to;
+
+
                 DateValidator dv = new DateValidator();
                 var valid = dv.Validate(fromTo);
-                if(valid.IsValid)
+                if (valid.IsValid)
                 {
-                  return await _CarService.GetInRange(fromTo);
+                    return Ok(await _CarService.GetInRange(fromTo));
                 }
                 else
                 {
                     _logger.LogWarning("Invalid input");
 
-                    return null; //bad Request
+                    return BadRequest();
                 }
             }
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
 
-                throw e;
+                throw;
             }
         }
 
         [HttpGet("{vinCode}")]
-        [Route(nameof(GetCar))]
-        public async Task<ActionResult<bool>> GetCar(String vinCode)
+        public async Task<ActionResult> GetCar(String vinCode)
         {
             _logger.LogInformation("In {controller} GetCar Method invoked", this.GetType().Name);
 
             try
             {
-                return await _CarService.UpdateCarInfo(vinCode);
-                
+                bool success = await _CarService.UpdateCarInfo(vinCode);
+                if (success)
+                {
+                    return Ok("Is available");
+
+                }
+                else
+                {
+                    return Ok("Is not available");
+                }
+
             }
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
 
-                throw e;
+                throw;
             }
         }
 

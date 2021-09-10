@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RepositoryLayer.Migrations
 {
-    public partial class firtsMIg : Migration
+    public partial class firstMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,28 +11,27 @@ namespace RepositoryLayer.Migrations
                 name: "CarTable",
                 columns: table => new
                 {
-                    carKey = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    vinCode = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     ownerID = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SerialNum = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     ReleaseYear = table.Column<int>(type: "Int", nullable: false),
-                    vinCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<double>(type: "Float", nullable: false),
                     StartDate = table.Column<DateTime>(type: "Date", nullable: false),
                     EndDate = table.Column<DateTime>(type: "Date", nullable: false),
+                    ForSale = table.Column<bool>(type: "Bit", nullable: false),
                     IsActive = table.Column<bool>(type: "Bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CarTable", x => x.carKey);
+                    table.PrimaryKey("PK_CarTable", x => x.vinCode);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ClientTable",
                 columns: table => new
                 {
-                    clientKey = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     ID = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -44,7 +43,7 @@ namespace RepositoryLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ClientTable", x => x.clientKey);
+                    table.PrimaryKey("PK_ClientTable", x => x.ID);
                 });
         }
 

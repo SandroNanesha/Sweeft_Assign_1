@@ -12,9 +12,6 @@ namespace DomainLayer.Models
     public class Client
     {
         [Key]
-        [Column(TypeName = "nvarchar(50)")]
-        public String clientKey { get; set; } = "";
-
         [Required]
         [Column(TypeName = "nvarchar(50)")]
         public String ID { get; set; }

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace ServicesLayer.CarService
 {
-    class CarService : ICarService
+    public class CarService : ICarService
     {
         private readonly ApplicationDbContext _context;
         private readonly CarDBValidator _dbValidator;
@@ -33,11 +33,8 @@ namespace ServicesLayer.CarService
             if (!_dbValidator.IsActive(newCarDTO))
             {
                 Car newCar = _mapper.Map<Car>(newCarDTO);
-                
-                Guid g = Guid.NewGuid();
-                newCar.carKey = g.ToString();
+                await _context.cars.AddAsync(newCar);
 
-                _context.cars.AddAsync(newCar);
             }
             else
             {
@@ -49,12 +46,10 @@ namespace ServicesLayer.CarService
 
         public async Task DeleteCar(CarDTO currCarDTO)
         {
-            if (_dbValidator.IsActive(currCarDTO))
+            Car currCar = _dbValidator.getCar(currCarDTO);
+            if (currCar != null)
             {
-                Car currCar = _mapper.Map<Car>(currCarDTO);
-
                 currCar.IsActive = false;
-                _context.cars.Update(currCar);
             }
             else
             {

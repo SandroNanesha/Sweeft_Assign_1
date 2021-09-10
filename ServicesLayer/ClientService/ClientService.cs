@@ -35,11 +35,8 @@ namespace ServicesLayer.ClientService
             if (!_dbValidator.IsActive(newClientDTO))
             {
                 Client newClient = _mapper.Map<Client>(newClientDTO);
-                
-                Guid g = Guid.NewGuid();
-                newClient.clientKey = g.ToString();
-                
                 _context.clients.AddAsync(newClient);
+
             } else
             {
                 _logger.LogWarning("Client with id {id) is already in database", newClientDTO.ID);
@@ -55,10 +52,9 @@ namespace ServicesLayer.ClientService
 
             if (_dbValidator.IsActive(currClientDTO))
             {
-                Client currClient = _mapper.Map<Client>(currClientDTO);
-                
+                Client currClient = await _context.clients.Where(clt => clt.ID == clientID && clt.IsActive).FirstOrDefaultAsync();
+
                 currClient.IsActive = false;
-                _context.clients.Update(currClient);
             } else
             {
                 _logger.LogWarning("Client with id {id) is not active in database", currClientDTO.ID);
