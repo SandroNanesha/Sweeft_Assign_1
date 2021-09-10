@@ -19,7 +19,8 @@ namespace ServicesLayer.Validators.DBValidators
         }
         public bool IsActive(CarDTO car)
         {
-            return _context.cars.Any(cr => cr.vinCode == car.vinCode && cr.IsActive == true);
+            return _context.cars.Any(cr => cr.vinCode == car.vinCode && cr.IsActive == true)
+                && _context.clients.Any(clt => clt.ID == car.ownerID && clt.IsActive == true);
         }
 
         

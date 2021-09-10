@@ -7,6 +7,7 @@ using RepositoryLayer;
 using ServicesLayer.Validators.DBValidators;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,16 +64,36 @@ namespace ServicesLayer.CarService
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<WholeDTO>> GetInRange(CarDTO fromTo)
+        public async Task<IEnumerable<WholeDTO>> GetInRange(DateDTO fromTo)
         {
-            //foreach(var car in )
-            //return await _context.cars.Where(car => car.IsActive && car.StartDate >= fromTo.StartDate && car.EndDate <= fromTo.EndDate).ToAsyncList();
-            throw new NotImplementedException();
+            DateTime from = toDateTime(fromTo.StartDate);
+            DateTime to = toDateTime(fromTo.EndDate);
+
+            List<Car> foundCars = await _context.cars.Where(car => car.IsActive && car.StartDate >= from  && car.EndDate <= to).ToListAsync();
+            List<WholeDTO> responseInfo = new List<WholeDTO>();
+
+            foreach(var car in foundCars)
+            {
+                WholeDTO currCarInfo = _mapper.Map<WholeDTO>(car);
+                Client currClient = await _context.clients.Where(clt => clt.ID == car.ownerID).FirstOrDefaultAsync();
+                currCarInfo = _mapper.Map<WholeDTO>(currClient);
+                responseInfo.Add(currCarInfo);
+            }
+            return responseInfo;
         }
 
-        public async Task UpdateCarInfo(String vinCode)
-        { 
+        private DateTime toDateTime(String txtDate)
+        {
+            DateTime dt;
+            bool isValid = DateTime.TryParseExact(txtDate, "dd/MM/yyyy", new CultureInfo("en-GB"), DateTimeStyles.None, out dt);
 
+            return dt;
+    
+        }
+
+        public async Task<bool> UpdateCarInfo(String vinCode)
+        {
+            bool success = false;
             Car currCar = await _context.cars.Where(car => car.vinCode == vinCode && car.IsActive && car.ForSale).FirstOrDefaultAsync();
 
             if (currCar != null)
@@ -80,14 +101,17 @@ namespace ServicesLayer.CarService
                 currCar.ForSale = false;
 
                 _context.cars.Update(currCar);
+                success = true;
 
             }
             else
             {
                 _logger.LogWarning("Car with vinCode {vinCode) is not in database", vinCode);
+                
             }
 
             await _context.SaveChangesAsync();
+            return success;
 
         }
     }

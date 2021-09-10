@@ -96,3 +96,82 @@ END
 2021-09-10 13:23:20.602 +04:00 [INF] Executed action SweeftAutoMartket.Controllers.ClientController.GetClient (SweeftAutoMartket) in 178.5529ms
 2021-09-10 13:23:20.604 +04:00 [INF] Executed endpoint 'SweeftAutoMartket.Controllers.ClientController.GetClient (SweeftAutoMartket)'
 2021-09-10 13:23:20.606 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44344/api/Client/12312 - - - 400 - application/problem+json;+charset=utf-8 257.9247ms
+2021-09-10 13:52:39.177 +04:00 [INF] Entity Framework Core 5.0.9 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2021-09-10 13:52:53.570 +04:00 [INF] Entity Framework Core 5.0.9 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2021-09-10 13:52:53.909 +04:00 [INF] Executed DbCommand (145ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [DB_Sweeft];
+2021-09-10 13:52:53.970 +04:00 [INF] Executed DbCommand (58ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [DB_Sweeft] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2021-09-10 13:52:53.983 +04:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2021-09-10 13:52:54.041 +04:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2021-09-10 13:52:54.043 +04:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2021-09-10 13:52:54.054 +04:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2021-09-10 13:52:54.058 +04:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2021-09-10 13:52:54.068 +04:00 [INF] Applying migration '20210909163521_firtsMIg'.
+2021-09-10 13:52:54.083 +04:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [CarTable] (
+    [carKey] nvarchar(50) NOT NULL,
+    [ownerID] nvarchar(50) NOT NULL,
+    [Brand] nvarchar(max) NOT NULL,
+    [Model] nvarchar(max) NOT NULL,
+    [SerialNum] nvarchar(50) NOT NULL,
+    [ReleaseYear] Int NOT NULL,
+    [vinCode] nvarchar(max) NOT NULL,
+    [Price] Float NOT NULL,
+    [StartDate] Date NOT NULL,
+    [EndDate] Date NOT NULL,
+    [IsActive] Bit NOT NULL,
+    CONSTRAINT [PK_CarTable] PRIMARY KEY ([carKey])
+);
+2021-09-10 13:52:54.084 +04:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [ClientTable] (
+    [clientKey] nvarchar(50) NOT NULL,
+    [ID] nvarchar(50) NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [LastName] nvarchar(max) NULL,
+    [BirthDate] Date NOT NULL,
+    [Tel] nvarchar(50) NULL,
+    [mail] nvarchar(50) NULL,
+    [Address] nvarchar(50) NULL,
+    [IsActive] Bit NOT NULL,
+    CONSTRAINT [PK_ClientTable] PRIMARY KEY ([clientKey])
+);
+2021-09-10 13:52:54.086 +04:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210909163521_firtsMIg', N'5.0.9');
+2021-09-10 13:52:54.089 +04:00 [INF] Applying migration '20210910095239_nth'.
+2021-09-10 13:52:54.100 +04:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [CarTable] ADD [ForSale] Bit NOT NULL DEFAULT CAST(0 AS Bit);
+2021-09-10 13:52:54.101 +04:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210910095239_nth', N'5.0.9');
+2021-09-10 13:53:49.000 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2021-09-10 13:53:49.012 +04:00 [INF] Hosting environment: Development
+2021-09-10 13:53:49.013 +04:00 [INF] Content root path: C:\Users\User\Source\Repos\Sweeft_Assign_1\SweeftAutoMartket
+2021-09-10 13:53:49.014 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44344/swagger/index.html - -
+2021-09-10 13:53:49.090 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44344/swagger/index.html - - - 200 - text/html;charset=utf-8 77.0770ms
+2021-09-10 13:53:49.206 +04:00 [INF] Request starting HTTP/2 GET https://localhost:44344/swagger/v1/swagger.json - -
+2021-09-10 13:53:49.262 +04:00 [INF] Request finished HTTP/2 GET https://localhost:44344/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 56.2591ms
+2021-09-10 13:54:01.584 +04:00 [INF] Request starting HTTP/2 POST https://localhost:44344/api/Client/PostClient application/json 169
+2021-09-10 13:54:01.613 +04:00 [INF] Executing endpoint 'SweeftAutoMartket.Controllers.ClientController.PostClient (SweeftAutoMartket)'
+2021-09-10 13:54:01.651 +04:00 [INF] Route matched with {action = "PostClient", controller = "Client"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] PostClient(DomainLayer.DTOs.ClientDTO) on controller SweeftAutoMartket.Controllers.ClientController (SweeftAutoMartket).
+2021-09-10 13:54:01.798 +04:00 [INF] In ClientController Post Method invoked
+2021-09-10 13:54:01.815 +04:00 [WRN] Invalid input
+2021-09-10 13:54:01.819 +04:00 [INF] Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'.
+2021-09-10 13:54:01.831 +04:00 [INF] Executed action SweeftAutoMartket.Controllers.ClientController.PostClient (SweeftAutoMartket) in 176.3278ms
+2021-09-10 13:54:01.832 +04:00 [INF] Executed endpoint 'SweeftAutoMartket.Controllers.ClientController.PostClient (SweeftAutoMartket)'
+2021-09-10 13:54:01.833 +04:00 [INF] Request finished HTTP/2 POST https://localhost:44344/api/Client/PostClient application/json 169 - 400 - application/problem+json;+charset=utf-8 249.5964ms

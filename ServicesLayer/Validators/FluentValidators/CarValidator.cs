@@ -18,12 +18,22 @@ namespace ServicesLayer.Validators.FluentValidators
 
         public CarValidator()
         {
-
-            RuleFor(c => c.ownerID).Cascade(CascadeMode.StopOnFirstFailure)
+            RuleSet("requestChecker", () =>
+            {
+                RuleFor(c => c.ownerID).Cascade(CascadeMode.StopOnFirstFailure)
                          .NotNull().WithMessage("{PropertyName} is null")
                          .NotEmpty().WithMessage("{PropertyName} field is empty")
                          .Length(11).WithMessage("Length of {TotalLength} of {PropertyName} Invalid")
                          .Must(SyntaxChecker.IsDigitsOnly).WithMessage("{PropertyName} contains Invalid characters");
+
+                RuleFor(c => c.vinCode).Cascade(CascadeMode.StopOnFirstFailure)
+                         .NotNull().WithMessage("{PropertyName} is null")
+                         .NotEmpty().WithMessage("{PropertyName} field is empty");
+
+
+            });
+
+                
 
             RuleFor(c => c.Brand).Cascade(CascadeMode.StopOnFirstFailure)
                          .NotNull().WithMessage("{PropertyName} is null")
@@ -39,9 +49,6 @@ namespace ServicesLayer.Validators.FluentValidators
 
             RuleFor(c => c.ReleaseYear).NotNull().WithMessage("{PropertyName} is null");
 
-            RuleFor(c => c.vinCode).Cascade(CascadeMode.StopOnFirstFailure)
-                         .NotNull().WithMessage("{PropertyName} is null")
-                         .NotEmpty().WithMessage("{PropertyName} field is empty");
 
             RuleFor(c => c.Price).NotNull().WithMessage("{PropertyName} is null");
 

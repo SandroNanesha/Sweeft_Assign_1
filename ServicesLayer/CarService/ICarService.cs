@@ -11,10 +11,10 @@ namespace ServicesLayer.CarService
     {
         Task AddCar(CarDTO newCar);
 
-        Task UpdateCarInfo(String vinCode);
+        Task<bool> UpdateCarInfo(String vinCode);
 
         Task DeleteCar(CarDTO currCar);
 
-        Task<IEnumerable<WholeDTO>> GetInRange(CarDTO fromTo);
+        Task<IEnumerable<WholeDTO>> GetInRange(DateDTO fromTo);
     }
 }
