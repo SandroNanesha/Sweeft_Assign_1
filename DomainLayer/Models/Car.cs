@@ -48,6 +48,9 @@ namespace DomainLayer.Models
         [Column(TypeName = "Date")]
         public DateTime EndDate { get; set; }
 
+        [Column(TypeName = "Date")]
+        public DateTime ReleaseDate { get; set; }
+
         [Column(TypeName = "Bit")]
         public bool ForSale { get; set; } = true;
 

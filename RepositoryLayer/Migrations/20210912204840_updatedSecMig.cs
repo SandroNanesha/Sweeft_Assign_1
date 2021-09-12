@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RepositoryLayer.Migrations
 {
-    public partial class firstMig : Migration
+    public partial class updatedSecMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,6 +20,7 @@ namespace RepositoryLayer.Migrations
                     Price = table.Column<double>(type: "Float", nullable: false),
                     StartDate = table.Column<DateTime>(type: "Date", nullable: false),
                     EndDate = table.Column<DateTime>(type: "Date", nullable: false),
+                    ReleaseDate = table.Column<DateTime>(type: "Date", nullable: false),
                     ForSale = table.Column<bool>(type: "Bit", nullable: false),
                     IsActive = table.Column<bool>(type: "Bit", nullable: false)
                 },

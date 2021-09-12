@@ -36,7 +36,9 @@ namespace SweeftAutoMartket.Controllers
 
             try
             {
-                var valid = _CarValidator.Validate(CarDTO);
+                var valid = _CarValidator.Validate(CarDTO, options => {
+                    options.IncludeAllRuleSets();
+                });
                 if (valid.IsValid)
                 {
                     await _CarService.AddCar(CarDTO);
@@ -98,7 +100,10 @@ namespace SweeftAutoMartket.Controllers
 
 
                 DateValidator dv = new DateValidator();
-                var valid = dv.Validate(fromTo);
+                var valid = dv.Validate(fromTo, options => {
+                    options.IncludeAllRuleSets();
+                });
+
                 if (valid.IsValid)
                 {
                     return Ok(await _CarService.GetInRange(fromTo));
@@ -136,6 +141,23 @@ namespace SweeftAutoMartket.Controllers
                     return Ok("Is not available");
                 }
 
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+
+                throw;
+            }
+        }
+
+        [HttpGet("report")]
+        public async Task<ActionResult<ReportDTO>> GetReport(DateTime monthYear)
+        {
+            _logger.LogInformation("In {controller} GetReport Method invoked", this.GetType().Name);
+            
+            try
+            {
+                return Ok(await _CarService.GetReport(monthYear));
             }
             catch (Exception e)
             {

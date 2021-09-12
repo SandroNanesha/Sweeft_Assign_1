@@ -16,5 +16,7 @@ namespace ServicesLayer.CarService
         Task DeleteCar(CarDTO currCar);
 
         Task<IEnumerable<WholeDTO>> GetInRange(DateDTO fromTo);
+
+        Task<ReportDTO> GetReport(DateTime monthYear);
     }
 }

@@ -10,8 +10,8 @@ using RepositoryLayer;
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210910144652_firstMig")]
-    partial class firstMig
+    [Migration("20210912204840_updatedSecMig")]
+    partial class updatedSecMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,6 +45,9 @@ namespace RepositoryLayer.Migrations
 
                     b.Property<double>("Price")
                         .HasColumnType("Float");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("Date");
 
                     b.Property<int>("ReleaseYear")
                         .HasColumnType("Int");

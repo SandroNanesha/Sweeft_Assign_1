@@ -24,6 +24,8 @@ namespace ServicesLayer.Validators.FluentValidators
                             .Must(SyntaxChecker.IsDigitsOnly).WithMessage("{PropertyName} contains Invalid characters");
             });
 
+            
+
             RuleFor(clt => clt.Tel).Cascade(CascadeMode.StopOnFirstFailure)
                                         .NotNull().WithMessage("{PropertyName} is null")
                                         .NotEmpty().WithMessage("{PropertyName} field is empty")

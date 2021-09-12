@@ -44,6 +44,9 @@ namespace RepositoryLayer.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("Float");
 
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("Date");
+
                     b.Property<int>("ReleaseYear")
                         .HasColumnType("Int");
 

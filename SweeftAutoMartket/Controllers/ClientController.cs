@@ -65,7 +65,9 @@ namespace SweeftAutoMartket.Controllers
 
             try
             {
-                var valid = _clientValidator.Validate(clientDTO);
+                var valid = _clientValidator.Validate(clientDTO, options => {
+                    options.IncludeAllRuleSets();
+                });
                 if (valid.IsValid)
                 {
                     await _clientService.AddClient(clientDTO);

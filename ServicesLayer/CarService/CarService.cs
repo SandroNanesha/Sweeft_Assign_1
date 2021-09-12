@@ -38,7 +38,7 @@ namespace ServicesLayer.CarService
             }
             else
             {
-                _logger.LogWarning("Car with vinCode {vinCode) is already in database", newCarDTO.vinCode);
+                _logger.LogWarning("Car with vinCode {vinCode) is already in database or no owner ID was found", newCarDTO.vinCode);
             }
 
             await _context.SaveChangesAsync();
@@ -94,6 +94,7 @@ namespace ServicesLayer.CarService
             if (currCar != null)
             {
                 currCar.ForSale = false;
+                currCar.ReleaseDate = DateTime.Now;
 
                 _context.cars.Update(currCar);
                 success = true;
@@ -107,6 +108,28 @@ namespace ServicesLayer.CarService
 
             await _context.SaveChangesAsync();
             return success;
+
+        }
+
+        public async Task<ReportDTO> GetReport(DateTime monthYear)
+        {
+            ReportDTO report = new ReportDTO();
+            
+            report.SumOfIncome = await _context.cars.Where(cr => cr.ReleaseDate.Month == monthYear.Month
+                && cr.ReleaseDate.Year == monthYear.Year && cr.IsActive).SumAsync(cr => cr.Price);
+            report.SumOfSoldCars = await _context.cars.Where(cr => cr.ReleaseDate.Month == monthYear.Month
+                && cr.ReleaseDate.Year == monthYear.Year && cr.IsActive).CountAsync();
+            
+            if(report.SumOfSoldCars > 0)
+            {
+                report.AveIncome = await _context.cars.Where(cr => cr.ReleaseDate.Month == monthYear.Month
+                    && cr.ReleaseDate.Year == monthYear.Year && cr.IsActive).AverageAsync(cr => cr.Price);
+
+            }
+
+            report.monthYear = monthYear;
+
+            return report;
 
         }
     }
